@@ -1,7 +1,53 @@
-# Profile Template for Clash Verge
+proxies:
+  - name: "Fake-US-01"
+    type: vmess
+    server: us1.example.com
+    port: 443
+    uuid: "11111111-1111-1111-1111-111111111111"
+    alterId: 0
+    cipher: auto
+    tls: true
 
-proxies: []
+  - name: "Fake-JP-02"
+    type: trojan
+    server: jp2.example.com
+    port: 443
+    password: "fakepassword123"
+    sni: jp2.example.com
 
-proxy-groups: []
+  - name: "Fake-SG-03"
+    type: ss
+    server: sg3.example.com
+    port: 8388
+    cipher: aes-256-gcm
+    password: "fakepass"
 
-rules: []
+proxy-groups:
+  - name: "♻️ 自动选择"
+    type: select
+    proxies:
+      - Fake-US-01
+      - Fake-JP-02
+      - Fake-SG-03
+
+  - name: "📺 YouTube"
+    type: select
+    proxies:
+      - Fake-US-01
+      - Fake-JP-02
+      - DIRECT
+
+  - name: "🌍 全球"
+    type: select
+    proxies:
+      - ♻️ 自动选择
+      - Fake-US-01
+      - Fake-JP-02
+      - Fake-SG-03
+      - DIRECT
+
+rules:
+  - DOMAIN-SUFFIX,google.com,🌍 全球
+  - DOMAIN-SUFFIX,youtube.com,📺 YouTube
+  - GEOIP,CN,DIRECT
+  - MATCH,♻️ 自动选择
