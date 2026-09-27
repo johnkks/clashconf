@@ -1,3 +1,4 @@
 # Add one direct-connect rule per line, for example:
 # DOMAIN-SUFFIX,example.com
 IP-CIDR,111.230.196.153/32,no-resolve
+DOMAIN-SUFFIX,citiesdesigners.com
